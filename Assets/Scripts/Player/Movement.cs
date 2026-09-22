@@ -8,13 +8,14 @@ using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 public class Movement : MonoBehaviour
 {
-    public InputController inputController;
-    protected Rigidbody2D rigidbody_2D;
+    [SerializeField] private InputController inputController;
+    private Rigidbody2D rigidbody_2D;
     public Vector2 movementForce;
-    bool movementKeyPressed = false;
+    private bool movementKeyPressed = false;
     private const float defaultSpeed = 5f;
+    [SerializeField] public float defaultBoostTime = 1.5f;
     public float speed = defaultSpeed;
-    public bool boosted = false;
+    public float boostTimeRemaining;
     
     void Start() {
         rigidbody_2D = gameObject.GetComponent<Rigidbody2D>();
@@ -30,6 +31,7 @@ public class Movement : MonoBehaviour
             movementKeyPressed = true;
             movementForce += Vector2.down;
         }
+
         if(inputController.isAPressed) {
             movementKeyPressed = true;
             movementForce += Vector2.left;
@@ -37,31 +39,47 @@ public class Movement : MonoBehaviour
             movementKeyPressed = true;
             movementForce += Vector2.right;
         }
+
         if(!movementKeyPressed) {
             rigidbody_2D.velocity = rigidbody_2D.velocity * 0.8f;
         }
+
         movementForce = (Vector2)Vector3.Normalize(movementForce) * 0.25f;
+        
         if(rigidbody_2D.velocity.magnitude < speed) {
             rigidbody_2D.AddForce(movementForce, ForceMode2D.Impulse);
         } else {
             rigidbody_2D.velocity = rigidbody_2D.velocity.normalized * speed;
         }
+
+        if(boostTimeRemaining > 0f) {
+            boostTimeRemaining -= Time.deltaTime;
+        } else {
+            resetSpeed();
+        }
     }
 
-    public IEnumerator boostSpeed(float multiplier, float seconds) {
+    public void boostSpeedByAmplifying(float multiplier, float time) {
         speed = defaultSpeed * multiplier;
-        boosted = true;
-        yield return new WaitForSeconds(seconds); 
-        speed = defaultSpeed;
-        boosted = false;
+        boostTimeRemaining = time;
+    }
+    
+    public void boostSpeedByAdding(float addition, float time) {
+        speed = defaultSpeed + addition;
+        boostTimeRemaining = time;
     }
 
-    public IEnumerator boostSpeed(float multiplier) {
-        float seconds = 1f;
+    public void boostSpeedByAmplifying(float multiplier) {
         speed = defaultSpeed * multiplier;
-        boosted = true;
-        yield return new WaitForSeconds(seconds); 
+        boostTimeRemaining = defaultBoostTime;
+    }
+
+    public void boostSpeedByAdding(float addition) {
+        speed = defaultSpeed + addition;
+        boostTimeRemaining = defaultBoostTime;
+    }
+
+    public void resetSpeed() {
         speed = defaultSpeed;
-        boosted = false;
     }
 }
