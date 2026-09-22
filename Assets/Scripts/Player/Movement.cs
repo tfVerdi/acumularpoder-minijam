@@ -14,9 +14,11 @@ public class Movement : MonoBehaviour
         rigidbody_2D = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    Vector2 movementForce;
+    public Vector2 movementForce;
     bool movementKeyPressed = false;
-    public float speed = 1.4f;
+    private const float defaultSpeed = 5f;
+    public float speed = defaultSpeed;
+    public bool boosted = false;
     void Update() {
         movementKeyPressed = false;
         movementForce = Vector2.zero;
@@ -43,5 +45,21 @@ public class Movement : MonoBehaviour
         } else {
             rigidbody_2D.velocity = rigidbody_2D.velocity.normalized * speed;
         }
+    }
+
+    public IEnumerator boostSpeed(float multiplier, float seconds) {
+        speed = defaultSpeed * multiplier;
+        boosted = true;
+        yield return new WaitForSeconds(seconds); 
+        speed = defaultSpeed;
+        boosted = false;
+    }    
+    public IEnumerator boostSpeed(float multiplier) {
+        float seconds = 1f;
+        speed = defaultSpeed * multiplier;
+        boosted = true;
+        yield return new WaitForSeconds(seconds); 
+        speed = defaultSpeed;
+        boosted = false;
     }
 }
