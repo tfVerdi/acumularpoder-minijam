@@ -10,15 +10,16 @@ public class Movement : MonoBehaviour
 {
     public InputController inputController;
     protected Rigidbody2D rigidbody_2D;
-    void Start() {
-        rigidbody_2D = gameObject.GetComponent<Rigidbody2D>();
-    }
-
     public Vector2 movementForce;
     bool movementKeyPressed = false;
     private const float defaultSpeed = 5f;
     public float speed = defaultSpeed;
     public bool boosted = false;
+    
+    void Start() {
+        rigidbody_2D = gameObject.GetComponent<Rigidbody2D>();
+    }
+
     void Update() {
         movementKeyPressed = false;
         movementForce = Vector2.zero;
@@ -53,7 +54,8 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(seconds); 
         speed = defaultSpeed;
         boosted = false;
-    }    
+    }
+
     public IEnumerator boostSpeed(float multiplier) {
         float seconds = 1f;
         speed = defaultSpeed * multiplier;

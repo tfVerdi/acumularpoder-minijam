@@ -5,13 +5,14 @@ using UnityEngine;
 public class PlayerState : MonoBehaviour
 {
     public const float vfxDurationSeconds = 0.75f;
+    public int energyStored = 0;
+    public GameObject vfxHolder;
+
     private const int maxEnergyStored = 3;
     public int getMaxEnergyStored() {
         return maxEnergyStored;
     }
-    public int energyStored = 0;
-
-    public GameObject vfxHolder;
+    
     private IEnumerator playEnergyPickupVFX(GameObject effectHolder, float seconds = vfxDurationSeconds) {
         SpriteRenderer renderer = effectHolder.GetComponent<SpriteRenderer>();
         renderer.enabled = true;
@@ -23,10 +24,12 @@ public class PlayerState : MonoBehaviour
         Debug.Log("SpeedBoost vfx placeholder text! FIIIUUUUM");
         yield return new WaitForSeconds(seconds);
     }
+
     public enum VFXEnum {
         EnergyPickup = 1,
         SpeedBoost = 2,
     }
+
     public void playVFX(VFXEnum vfxEnum, float seconds) {
         switch (vfxEnum) {
             case VFXEnum.EnergyPickup:
@@ -36,7 +39,8 @@ public class PlayerState : MonoBehaviour
                 StartCoroutine(playSpeedBoostVFX(vfxHolder, seconds));
                 return;
         }
-    }    
+    }
+
     public void playVFX(VFXEnum vfxEnum) {
         switch (vfxEnum) {
             case VFXEnum.EnergyPickup:

@@ -18,8 +18,7 @@ public class InteractableTilemap : MonoBehaviour
         playerMovement = player.GetComponent<Movement>();
     }
 
-    public void energyPickup(Collider2D collider2D)
-    {   
+    public void energyPickup(Collider2D collider2D) {   
         playerState = collider2D.gameObject.GetComponent<PlayerState>();
         playerState.playVFX(PlayerState.VFXEnum.EnergyPickup);
         if(playerState.energyStored < playerState.getMaxEnergyStored()) {
@@ -40,7 +39,8 @@ public class InteractableTilemap : MonoBehaviour
         }
         Debug.Log("Overlapping tile: " + tile.name);
         return;
-    } 
+    }
+
     private void tileCheckEnter(TileBase tile, Vector3Int cell, Collider2D collider2D) {
         if(tile.name.StartsWith("Tile_boost_")) {
             // Debug.Log(tile.name);
@@ -70,7 +70,7 @@ public class InteractableTilemap : MonoBehaviour
     }
 
     private void OnTriggerStay2D(Collider2D collider2D) {
-        if (!collider2D.CompareTag("Player")) {
+        if(!collider2D.CompareTag("Player")) {
             return;
         }
 
@@ -78,12 +78,12 @@ public class InteractableTilemap : MonoBehaviour
         Vector3Int minCell = tilemap.WorldToCell(bounds.min);
         Vector3Int maxCell = tilemap.WorldToCell(bounds.max);
 
-        for (int x = minCell.x; x <= maxCell.x; x++) {
-            for (int y = minCell.y; y <= maxCell.y; y++) {
+        for(int x = minCell.x; x <= maxCell.x; x++) {
+            for(int y = minCell.y; y <= maxCell.y; y++) {
                 Vector3Int cell = new Vector3Int(x, y, 0);
                 TileBase tile = tilemap.GetTile(cell);
 
-                if (tile == null) {
+                if(tile == null) {
                     continue;
                 }
                 tileCheckStay(tile, cell, collider2D);
@@ -92,7 +92,7 @@ public class InteractableTilemap : MonoBehaviour
     }    
     
     private void OnTriggerEnter2D(Collider2D collider2D) {
-        if (!collider2D.CompareTag("Player")) {
+        if(!collider2D.CompareTag("Player")) {
             return;
         }
 
@@ -100,12 +100,12 @@ public class InteractableTilemap : MonoBehaviour
         Vector3Int minCell = tilemap.WorldToCell(bounds.min);
         Vector3Int maxCell = tilemap.WorldToCell(bounds.max);
 
-        for (int x = minCell.x; x <= maxCell.x; x++) {
-            for (int y = minCell.y; y <= maxCell.y; y++) {
+        for(int x = minCell.x; x <= maxCell.x; x++) {
+            for(int y = minCell.y; y <= maxCell.y; y++) {
                 Vector3Int cell = new Vector3Int(x, y, 0);
                 TileBase tile = tilemap.GetTile(cell);
 
-                if (tile == null) {
+                if(tile == null) {
                     continue;
                 }
                 tileCheckEnter(tile, cell, collider2D);
