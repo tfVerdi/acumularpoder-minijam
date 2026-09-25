@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rigidbody_2D;
     public Vector2 movementForce;
     private bool movementKeyPressed = false;
-    private const float defaultSpeed = 5f;
+    private const float defaultSpeed = 8f;
     [SerializeField] public float defaultBoostTime = 1.5f;
     public float speed = defaultSpeed;
     public float boostTimeRemaining;

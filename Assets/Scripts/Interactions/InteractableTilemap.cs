@@ -1,14 +1,10 @@
-using System.Linq;
-using System.Text.RegularExpressions;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class InteractableTilemap : MonoBehaviour
 {
     public Tilemap tilemap;
-    public Tile[] meter_tiles;
-    public int meter_look = 0; // Max = 8
+    [SerializeField] private EnergyMeterLogic energyMeterLogic;
     public GameObject player;
     private PlayerState playerState;
     private Movement playerMovement;
@@ -33,11 +29,11 @@ public class InteractableTilemap : MonoBehaviour
         }
         if(tile.name.StartsWith("Tile_meter_") && tile.name != "Tile_meter_08" && playerState.energyStored > 0) {
             playerState.energyStored -= 1;
-            meter_look += 1;
-            tilemap.SetTile(cell, meter_tiles[meter_look]);
+            energyMeterLogic.meter_state += 1;
+            tilemap.SetTile(cell, energyMeterLogic.meter_tiles[energyMeterLogic.meter_state]);
         }
         if(tile.name.StartsWith("Tile_boost_")) {
-            float coeficient = 2f;
+            float coeficient = 1.4f;
             playerMovement.boostSpeedByAmplifying(coeficient);
         }
         return;
