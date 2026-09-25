@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    
     public bool timerStopped = false;
     public GameObject textObject;
     private TMP_Text timerText;
@@ -37,7 +36,6 @@ public class Timer : MonoBehaviour
         } else {
             timerText.SetText(minutes + ":" + seconds + ":" + miliseconds);
         }
-        
     }
     
     public void StopTimer() {

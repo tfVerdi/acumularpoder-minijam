@@ -31,6 +31,9 @@ public class InteractableTilemap : MonoBehaviour
             playerState.energyStored -= 1;
             energyMeterLogic.meter_state += 1;
             tilemap.SetTile(cell, energyMeterLogic.meter_tiles[energyMeterLogic.meter_state]);
+            if(energyMeterLogic.meter_state == 8) {
+                energyMeterLogic.FinishStage();
+            }
         }
         if(tile.name.StartsWith("Tile_boost_")) {
             float coeficient = 1.4f;
