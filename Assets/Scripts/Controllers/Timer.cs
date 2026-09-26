@@ -5,6 +5,7 @@ public class Timer : MonoBehaviour
 {
     public bool timerStopped = false;
     public GameObject textObject;
+    public string timerString;
     private TMP_Text timerText;
     public float timer;
     public int hours;
@@ -32,10 +33,11 @@ public class Timer : MonoBehaviour
         timer = (int)timer % 60;
         seconds = (int)timer / 1;
         if(hours != 0) {
-            timerText.SetText(hours + ":" + minutes + ":" + seconds + ":" + miliseconds);
+            timerString = hours + ":" + minutes + ":" + seconds + "." + miliseconds;
         } else {
-            timerText.SetText(minutes + ":" + seconds + ":" + miliseconds);
+            timerString = minutes + ":" + seconds + "." + miliseconds;
         }
+        timerText.SetText(timerString);
     }
     
     public void StopTimer() {

@@ -9,7 +9,7 @@ public class InputController : MonoBehaviour
     public bool isAPressed;
     public bool isSPressed;
     public bool isDPressed;
-
+    public bool isSpacePressed;
     private float ErrorTolerance = 0.05f;
     public float horizontalAxisValue;
     public float verticalAxisValue;
@@ -19,6 +19,7 @@ public class InputController : MonoBehaviour
         horizontalAxisValue = Input.GetAxis("Horizontal");
         verticalAxisValue = Input.GetAxis("Vertical");
         ParseMovementInput(verticalAxisValue, horizontalAxisValue);
+        isSpacePressed = Input.GetKey(KeyCode.Space);
     }
 
     void ParseMovementInput(float verticalAxisValue, float horizontalAxisValue) {
